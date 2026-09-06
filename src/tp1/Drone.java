@@ -1,10 +1,10 @@
 package tp1;
 
 public class Drone {
-    private String identifiant;
-    private double capaciteBatterie;  // capacité totale de la batterie en watt
-    private double consommationHeure; //en watt /heure
-    private double vitesseMoyenne; //en km/h
+    private final String identifiant;
+    private final double capaciteBatterie;  // capacité totale de la batterie en watt
+    private final double consommationHeure; //en watt /heure
+    private final double vitesseMoyenne; //en km/h
     private int nbreHeuresVol; // nb d'heures total que le drone a volé
 
 
@@ -16,6 +16,7 @@ public class Drone {
         this.nbreHeuresVol = nbreHeuresVol;
     }
 
+    // Partie A
 
     // 3.
     public double energieConsomme() {
@@ -30,7 +31,7 @@ public class Drone {
 
     // 5.
     public double pourcentageBatterieRestante() {
-        double ratio = energieConsomme() / capaciteBatterie;
+        double ratio = energieRestante() / capaciteBatterie;
         return Math.round(ratio * 100);
     }
 
@@ -49,8 +50,44 @@ public class Drone {
         return autonomieRestante() * vitesseMoyenne;
     }
 
+    // 8.
+    public String categorie() throws Exception {
+        char firstLetter = identifiant.charAt(0);
+        return switch (firstLetter) {
+            case '1' -> "Loisir";
+            case '2' -> "Photographie";
+            case '3' -> "Professionnel";
+            case '4' -> "Industriel";
+            default -> throw new Exception("Identifiant must start with char 1, 2, 3 or 4.");
+        };
+    }
 
+    // 9.
+    public int prochainEntretien() {
+        try {
+            String categ = categorie();
+            int joursEntreEntretiens = switch (categ) {
+                case "Loisir" -> 100;
+                case "Photographie" -> 75;
+                case "Professionnel" -> 50;
+                case "Industriel" -> 25;
+                default -> throw new Exception("Catégorie inconnue");
+            };
+            int joursPasses = nbreHeuresVol / 24;
+            int joursPassesDepuisDernier = joursPasses % joursEntreEntretiens;
+            if (joursPassesDepuisDernier == 0)
+                return 0; // entretien immédiat
+            else
+                return joursEntreEntretiens - joursPassesDepuisDernier;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 
-
+    // 9. (deuxième)
+    public void ajouterHeuresVol(int heures) {
+        if (heures > 0)
+            nbreHeuresVol += heures;
+    }
 
 }

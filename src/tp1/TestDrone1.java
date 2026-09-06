@@ -41,9 +41,9 @@ public class TestDrone1 {
 
                 Drone unDrone = new Drone ( champIdent.getText(), Double.parseDouble(champCapacite.getText()), Double.parseDouble(champConsommation.getText()),
                         Double.parseDouble(champVitesse.getText()), Integer.parseInt(champNbreHresVol.getText()));
-//                unDrone.ajouterHeuresVol((int)spinnerHeuresSup.getValue());
-//                champPourcentage.setText(unDrone.pourcentageBatterieRestante() + " %");
-//                champEntretien.setText(unDrone.prochainEntretien() + " jours");
+                unDrone.ajouterHeuresVol((int)spinnerHeuresSup.getValue());
+                champPourcentage.setText(unDrone.pourcentageBatterieRestante() + " %");
+                champEntretien.setText(unDrone.prochainEntretien() + " jours");
             }
         });
     }
